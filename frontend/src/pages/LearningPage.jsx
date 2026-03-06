@@ -177,7 +177,7 @@ const LearningPage = () => {
   return (
     <div className="grid gap-6 lg:grid-cols-[280px,1fr]">
       {/* Modules + lessons sidebar */}
-      <aside className="max-h-[calc(100vh-8rem)] overflow-y-auto rounded-2xl border border-slate-800 bg-slate-900/70 p-4">
+      <aside className="rounded-2xl border border-slate-800 bg-slate-900/70 p-4 lg:max-h-[calc(100vh-8rem)] lg:overflow-y-auto">
         <div className="mb-4 space-y-1">
           <p className="text-[11px] font-semibold uppercase tracking-wide text-blue-300">
             Learning path

@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
@@ -6,22 +6,23 @@ const GoogleCallbackPage = () => {
   const location = useLocation()
   const navigate = useNavigate()
   const { socialLogin } = useAuth()
-  const [error, setError] = useState(null)
+  const params = useMemo(
+    () => new URLSearchParams(location.search),
+    [location.search]
+  )
+
+  const token = params.get('token')
+  const userId = params.get('userId')
+  const name = params.get('name')
+  const email = params.get('email')
+  const role = params.get('role')
+  const isVerified = params.get('isVerified') === 'true'
+  const isBlocked = params.get('isBlocked') === 'true'
+
+  const error = !token || !email ? 'Google authentication failed. Please try again.' : null
 
   useEffect(() => {
-    const params = new URLSearchParams(location.search)
-    const token = params.get('token')
-    const userId = params.get('userId')
-    const name = params.get('name')
-    const email = params.get('email')
-    const role = params.get('role')
-    const isVerified = params.get('isVerified') === 'true'
-    const isBlocked = params.get('isBlocked') === 'true'
-
-    if (!token || !email) {
-      setError('Google authentication failed. Please try again.')
-      return
-    }
+    if (error) return
 
     socialLogin({
       token,
@@ -35,7 +36,18 @@ const GoogleCallbackPage = () => {
 
     const target = role === 'admin' ? '/admin' : '/dashboard'
     navigate(target, { replace: true })
-  }, [location.search, navigate, socialLogin])
+  }, [
+    error,
+    token,
+    userId,
+    name,
+    email,
+    role,
+    isVerified,
+    isBlocked,
+    navigate,
+    socialLogin,
+  ])
 
   return (
     <div className="flex min-h-[60vh] items-center justify-center">

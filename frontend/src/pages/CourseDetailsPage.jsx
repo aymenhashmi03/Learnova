@@ -68,7 +68,7 @@ const CourseDetailsPage = () => {
                   className="card-hover rounded-xl border border-gray-200 bg-white p-4 shadow-sm"
                 >
                   <div className="flex items-center justify-between gap-2">
-                    <h3 className="font-semibold text-gray-900">
+                    <h3 className="min-w-0 flex-1 font-semibold text-gray-900 line-clamp-2">
                       Module {index + 1}: {mod.title}
                     </h3>
                     <span className="text-xs text-gray-500">

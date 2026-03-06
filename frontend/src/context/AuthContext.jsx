@@ -1,26 +1,24 @@
-import { createContext, useContext, useEffect, useMemo, useState } from 'react'
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useCallback, useContext, useMemo, useState } from 'react'
 import PropTypes from 'prop-types'
 import apiClient from '../services/apiClient'
 
 const AuthContext = createContext(null)
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null)
-  const [token, setToken] = useState(null)
-  const [loading, setLoading] = useState(true)
-
-  useEffect(() => {
-    const storedToken = localStorage.getItem('learnova_token')
+  const [token, setToken] = useState(() => localStorage.getItem('learnova_token'))
+  const [user, setUser] = useState(() => {
     const storedUser = localStorage.getItem('learnova_user')
-
-    if (storedToken && storedUser) {
-      setToken(storedToken)
-      setUser(JSON.parse(storedUser))
+    if (!storedUser) return null
+    try {
+      return JSON.parse(storedUser)
+    } catch {
+      return null
     }
-    setLoading(false)
-  }, [])
+  })
+  const [loading] = useState(false)
 
-  const applyAuthPayload = (data) => {
+  const applyAuthPayload = useCallback((data) => {
     if (!data?.token) return
 
     setToken(data.token)
@@ -34,38 +32,38 @@ export const AuthProvider = ({ children }) => {
 
     localStorage.setItem('learnova_token', data.token)
     localStorage.setItem('learnova_user', JSON.stringify(nextUser))
-  }
+  }, [])
 
-  const login = async (credentials) => {
+  const login = useCallback(async (credentials) => {
     const { data } = await apiClient.post('/auth/login', credentials)
     applyAuthPayload(data)
-  }
+  }, [applyAuthPayload])
 
-  const signup = async (payload) => {
+  const signup = useCallback(async (payload) => {
     const { data } = await apiClient.post('/auth/register', payload)
     applyAuthPayload(data)
     return data
-  }
+  }, [applyAuthPayload])
 
-  const socialLogin = (data) => {
+  const socialLogin = useCallback((data) => {
     applyAuthPayload(data)
-  }
+  }, [applyAuthPayload])
 
-  const updateUser = (partial) => {
+  const updateUser = useCallback((partial) => {
     setUser((prev) => {
       if (!prev) return prev
       const nextUser = { ...prev, ...partial }
       localStorage.setItem('learnova_user', JSON.stringify(nextUser))
       return nextUser
     })
-  }
+  }, [])
 
-  const logout = () => {
+  const logout = useCallback(() => {
     setToken(null)
     setUser(null)
     localStorage.removeItem('learnova_token')
     localStorage.removeItem('learnova_user')
-  }
+  }, [])
 
   const value = useMemo(
     () => ({
@@ -79,7 +77,7 @@ export const AuthProvider = ({ children }) => {
       logout,
       updateUser,
     }),
-    [user, token, loading]
+    [user, token, loading, login, signup, socialLogin, logout, updateUser]
   )
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>

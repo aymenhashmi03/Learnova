@@ -364,7 +364,9 @@ const CoursesPage = () => {
                         {section.label}
                       </h2>
                     </div>
-                    <div className="hidden h-10 w-10 shrink-0 rounded-2xl bg-gradient-to-br sm:block group-hover:scale-105 transition-transform duration-150 ${section.accent}"></div>
+                    <div
+                      className={`hidden h-10 w-10 shrink-0 rounded-2xl bg-gradient-to-br sm:block ${section.accent} transition-transform duration-150 group-hover:scale-105`}
+                    />
                   </div>
                   <p className="text-sm text-slate-300">{section.description}</p>
                 </div>

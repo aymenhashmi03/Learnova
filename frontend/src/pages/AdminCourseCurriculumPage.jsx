@@ -147,7 +147,7 @@ const AdminCourseCurriculumPage = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <button
             type="button"
@@ -165,7 +165,7 @@ const AdminCourseCurriculumPage = () => {
           type="button"
           onClick={handleSaveOrder}
           disabled={saving}
-          className="rounded-full bg-blue-500 px-4 py-2 text-xs font-semibold text-slate-950 shadow-sm transition hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-300"
+          className="w-full rounded-full bg-blue-500 px-4 py-2 text-xs font-semibold text-slate-950 shadow-sm transition hover:bg-blue-400 disabled:cursor-not-allowed disabled:bg-slate-700 disabled:text-slate-300 sm:w-auto"
         >
           {saving ? 'Saving…' : 'Save order'}
         </button>

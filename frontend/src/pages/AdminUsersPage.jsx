@@ -52,7 +52,7 @@ const AdminUsersPage = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <h1 className="text-lg font-semibold text-slate-50">Manage users</h1>
           <p className="text-xs text-slate-400">

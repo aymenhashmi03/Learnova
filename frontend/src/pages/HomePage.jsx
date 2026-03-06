@@ -54,13 +54,6 @@ const cloudDevOps = [
   'Cloud Deployment & Hosting',
 ]
 
-const cybersecurity = [
-  'Ethical Hacking',
-  'Cybersecurity Fundamentals',
-  'Network Security',
-  'Penetration Testing',
-]
-
 const digitalSkills = [
   'Digital Marketing (SEO, Social Media, Ads)',
   'Amazon VA / Product Hunting',
@@ -76,20 +69,6 @@ const uiUxCourses = [
   'Mobile App UI Design',
   'Web UI Design',
   'UX Research & Wireframing',
-]
-
-const noCodeCourses = [
-  'Bubble.io Development',
-  'Webflow Mastery',
-  'No-Code App Development',
-  'Automation with Zapier & Make',
-]
-
-const automationCourses = [
-  'Business Automation with AI',
-  'Excel Automation with Python',
-  'Google Workspace Automation',
-  'CRM Setup & Automation',
 ]
 
 const contentCreation = [
@@ -440,7 +419,6 @@ const HomePage = () => {
           <div className="company-marquee rounded-2xl border border-indigo-100 bg-indigo-50 px-4 py-3">
             <div className="company-marquee-inner gap-8 text-sm font-medium text-indigo-700">
               {[...trustedCompanies, ...trustedCompanies].map((name, index) => (
-                // eslint-disable-next-line react/no-array-index-key
                 <span key={`${name}-${index}`} className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-indigo-500" />
                   <span>{name}</span>
